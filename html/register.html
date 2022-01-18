@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>注册</title>
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="../css/main.css">
+	<script src="../script/vue.js"></script>
+	<script src="../script/main.js"></script>
+</head>
+<body>
+	<div class="app" id="app">
+        <img class="music" :class="music_play?'music2':''" @click="music_play=!music_play" src="../image/player.png">
+        <div class="bg">
+            <img src="../image/bg0.jpg">
+        </div>
+		<div class="form">
+			<div class="form-title">
+				<img src="../image/register.png">
+				<img class="back" @click="open_login" src="../image/back.png">
+			</div>
+			<div class="form-data">
+				<div class="form-data-bg">
+					<img src="../image/bg1.png">
+				</div>
+				<div class="form-item">
+					<label class="text">手机</label>
+					<input type="text" name="mobile" placeholder="请输入手机号">
+				</div>
+				<div class="form-item">
+					<label class="text">验证码</label>
+					<input type="text" class="code" name="code" placeholder="请输入验证码">
+					<img class="refresh" src="../image/refresh.png">
+				</div>
+				<div class="form-item">
+					<label class="text">密码</label>
+					<input type="password" name="password" placeholder="请输入密码">
+				</div>
+				<div class="form-item">
+					<label class="text">确认密码</label>
+					<input type="password" name="password2" placeholder="请再次输入密码">
+				</div>
+				<div class="form-item">
+					<input type="checkbox" class="agree" name="agree" checked>
+					<label><span class="agree_text">同意魔方《用户协议》和《隐私协议》</span></label>
+				</div>
+				<div class="form-item">
+					<img class="commit" @click="game.play_music('../mp3/btn1.mp3')" src="../image/commit.png"/>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+    apiready = function(){
+        Vue.prototype.game = new Game("../mp3/bg1.mp3");
+        new Vue({
+            el:"#app",
+            data(){
+                return {
+                    music_play:true,
+                }
+            },
+            watch:{
+                music_play(){
+                    if(this.music_play){
+                        this.game.play_music("../mp3/bg1.mp3");
+                    }else{
+                        this.game.stop_music();
+                    }
+                }
+            },
+            methods:{
+                open_login(){
+                    this.game.outFrame();
+                }
+            }
+		})
+	}
+	</script>
+</body>
+</html>

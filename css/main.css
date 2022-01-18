@@ -1,0 +1,208 @@
+*{user-select: none;}
+body,form,input,table,ul,li{margin: 0;padding: 0;}
+body,th,td,.p1,.p2{font-family:arial}
+p,form,ol,ul,li,dl,dt,dd,h3{margin:0;padding:0;list-style:none;}
+table,img{border:0;}
+img{max-height: 100%;max-width: 100%;width:100%}
+td{font-size:9pt;line-height:18px;}
+em{font-style:normal;}
+em{font-style:normal;color:#c00;}
+a em{text-decoration:underline;}
+input,button{outline: 0;}
+
+@keyframes scaleDraw {  /*定义关键帧、scaleDrew是需要绑定到选择器的关键帧名称*/
+    0%{ transform: scale(1);  }
+    25%{ transform: scale(1.5);  }
+    50%{ transform: scale(1);  }
+    75%{ transform: scale(1.5);  }
+}
+@keyframes rotation{
+	from {-webkit-transform: rotate(0deg);}
+	to {-webkit-transform: rotate(360deg);}
+}
+html{
+	font-size: 12px;
+}
+
+.app{
+	margin: 0 auto;
+	max-width: 1125px;
+  width: 100%;
+	overflow: hidden;
+	max-height: 100%;
+  height: 100rem;
+	position: relative;
+}
+.app .music{
+	position: absolute;
+	width: 5rem;
+	height: 5rem;
+	top: 3rem;
+	right: 3rem;
+	z-index: 100;
+	border-radius: 50%;
+}
+.app .music2{
+	animation: rotation 6s ease-in infinite;
+}
+.app .bg{
+	margin: 0 auto;
+	width: 100%;
+	max-width: 100rem;
+	position: relative;
+	z-index: -1;
+}
+
+.app .bg img{
+	width: 100rem;
+	animation: scaleDraw 120s ease-in infinite;
+}
+.app .module1{
+	position: absolute;
+	top: 24.17rem;
+	left: 0;
+	width: 16.39rem;
+	height: 29.72rem;
+}
+.app .module2{
+	position: absolute;
+	top: 13.5rem;
+	right: 0;
+	width: 16rem;
+	height: 20.39rem;
+}
+.app .module3{
+	position: absolute;
+	width: 11.94rem;
+	height: 18.06rem;
+	top: 40.56rem;
+	right: 2.67rem;
+}
+.app .module4{
+	position: absolute;
+	top: 6.94rem;
+	left: 5.17rem;
+	width: 7.83rem;
+	height: 10.72rem;
+}
+
+.form{
+	margin: 0 auto;
+	position: absolute;
+	top: 16rem;
+	width: 26.94rem;
+	left: 0;
+	right: 0;
+}
+.form-title{
+	margin: 0 auto;
+	width: 16.86rem;
+	height: 5.33rem;
+	position: relative;
+	z-index: 0;
+}
+.form-title .back{
+	position: absolute;
+	right: -3rem;
+	top: 0.67rem;
+	width: 3.83rem;
+	height: 3.89rem;
+}
+.form-data{
+	position: relative;
+	padding-top: 3.78rem;
+  z-index: 0;
+}
+.form-data-bg{
+	position: absolute;
+	top: -2.39rem;
+	width: 26.94rem;
+	left: 0;
+	right: 0;
+	margin: auto;
+	z-index: -1;
+}
+.form-item{
+	width: 23.1rem;
+	margin: 0 auto 1.5rem;
+}
+.form-item label.text{
+	width: 6.67rem;
+	letter-spacing: 0.13rem;
+	text-align: right;
+	display: inline-block;
+	font-size: 1.33rem;
+	margin-bottom: 0.33rem;
+	font-weight: bold;
+}
+.form-item input[type=text],
+.form-item input[type=password]
+{
+	background-color: transparent;
+	border-radius: 3px;
+	width: 14.44rem;
+	border: 0.08rem #666 solid;
+	height: 2.33rem;
+	font-size: 1rem;
+	text-indent: 1rem;
+	vertical-align: bottom;
+}
+.form-item input.code{
+	width: 10.67rem;
+}
+.form-item .refresh{
+	width: 2.56rem;
+	height: 2.44rem;
+	margin-left: 0.67rem;
+	vertical-align: middle;
+}
+.form-item .refresh:active{
+	margin-top: .5px;
+	margin-bottom: -.5px;
+}
+.form-item input.agree{
+	margin-left: 2.4rem;
+	margin-bottom: 0.33rem;
+	width: 1rem;
+  height: 1rem;
+  vertical-align: sub;
+}
+.form-item .agree_text{
+	font-size: 1rem;
+}
+.form-item input.remember{
+	margin-left: 5.83rem;
+	vertical-align: sub;
+}
+.form-item .commit{
+	width: 11.5rem;
+	height: 3.94rem;
+	margin: 0 auto;
+	display: block;
+}
+.form-item .commit:active{
+	margin-top: .5px;
+	margin-bottom: -.5px;
+}
+.form-item .toreg{
+	margin-left: 3.11rem;
+	background: url("../image/btn1.png") no-repeat 0 0;
+	background-size: 100% 100%;
+}
+.form-item .tofind{
+	background: url("../image/btn2.png") no-repeat 0 0;
+	background-size: 100% 100%;
+}
+.form-item .toreg,
+.form-item .tofind
+{
+	display: inline-block;
+	width: 7.94rem;
+	height: 2.5rem;
+	margin-right: 1.67rem;
+	font-size: 1rem;
+	color: #fff;
+	line-height: 2.5rem;
+	text-align: center;
+	user-select: none;
+}
