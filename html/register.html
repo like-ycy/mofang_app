@@ -6,6 +6,7 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="../css/main.css">
 	<script src="../script/vue.js"></script>
+	<script src="../script/axios.js"></script>
 	<script src="../script/main.js"></script>
 </head>
 <body>
@@ -25,27 +26,27 @@
 				</div>
 				<div class="form-item">
 					<label class="text">手机</label>
-					<input type="text" name="mobile" placeholder="请输入手机号">
+					<input type="text" v-model="mobile" placeholder="请输入手机号">
 				</div>
 				<div class="form-item">
 					<label class="text">验证码</label>
-					<input type="text" class="code" name="code" placeholder="请输入验证码">
-					<img class="refresh" src="../image/refresh.png">
+					<input type="text" class="code" v-model="sms_code" placeholder="请输入验证码">
+					<img class="refresh" @click="send" src="../image/refresh.png">
 				</div>
 				<div class="form-item">
 					<label class="text">密码</label>
-					<input type="password" name="password" placeholder="请输入密码">
+					<input type="password" v-model="password" placeholder="请输入密码">
 				</div>
 				<div class="form-item">
 					<label class="text">确认密码</label>
-					<input type="password" name="password2" placeholder="请再次输入密码">
+					<input type="password" v-model="password2" placeholder="请再次输入密码">
 				</div>
 				<div class="form-item">
-					<input type="checkbox" class="agree" name="agree" checked>
-					<label><span class="agree_text">同意魔方《用户协议》和《隐私协议》</span></label>
+					<input type="checkbox" class="agree" v-model="agree" checked>
+					<label><span class="agree_text">同意磨方《用户协议》和《隐私协议》</span></label>
 				</div>
 				<div class="form-item">
-					<img class="commit" @click="game.play_music('../mp3/btn1.mp3')" src="../image/commit.png"/>
+					<img class="commit" @click="registerHandle" src="../image/commit.png"/>
 				</div>
 			</div>
 		</div>
@@ -57,7 +58,15 @@
             el:"#app",
             data(){
                 return {
-                    music_play:true,
+					mobile: "13312345677",
+					sms_code: "1234",
+					password: "123456",
+					password2: "123456",
+					agree: true,
+                    music_play: true,
+					is_send: false,     // 短信发送的冷却状态，false表示没有冷却，true表示进入冷却状态
+					send_interval: 60,  // 短信发送冷却时间
+					timer: null,        // 定时器的标识符
                 }
             },
             watch:{
@@ -67,12 +76,166 @@
                     }else{
                         this.game.stop_music();
                     }
-                }
+                },
+				mobile(){
+					if( /^1[3-9]\d{9}$/.test(this.mobile) ){
+						this.check_mobile()
+					}
+				}
             },
             methods:{
                 open_login(){
+					// 剔除当前页面
                     this.game.outFrame();
-                }
+                },
+				check_mobile(){
+					// 验证手机号
+					this.axios.post("",{
+					    "jsonrpc": "2.0",
+					    "id": this.game.uuid(),
+					    "method": "Users.mobile",
+					    "params": {"mobile": this.mobile}
+					}).then(response=>{
+						if(response.data.result.errno !== 0){
+							api.alert({
+							    title: "错误警告",
+							    msg: response.data.result.errmsg,
+							});
+						}
+					}).catch(error=>{
+						this.game.print(error.response.data.error);
+					});
+				},
+				registerHandle(){
+					// 注册处理
+					this.game.play_music('../mp3/btn1.mp3');  // 点击按钮声音
+					// 验证数据[双向验证]
+					if (!/1[3-9]\d{9}/.test(this.mobile)){
+						this.game.tips("手机号格式不正确！");
+						return; // 阻止代码继续往下执行
+					}
+
+					if(this.password.length<6 || this.password.length > 16){
+						this.game.tips("密码长度必须在6-16个字符之间!");
+						return;
+					}
+
+					if(this.password != this.password2){
+						this.game.tips("密码和确认密码不匹配!");
+						return; // 阻止代码继续往下执行
+					}
+				
+					if(this.sms_code.length < 1){
+						this.game.tips("验证码不能为空！");
+						return; // 阻止代码继续往下执行
+					}
+
+					if(this.agree === false){
+						this.game.tips("必须同意魔方APP的用户协议和隐私协议才能继续注册!");
+						return; // 阻止代码继续往下执行
+					}
+
+					// 提交注册信息
+					this.axios.post("",{
+						"jsonrpc": "2.0",
+						"id": this.game.uuid(),
+						"method": "Users.register",
+						"params": {
+							"mobile": this.mobile,
+							"sms_code": this.sms_code,
+							"password": this.password,
+							"password2": this.password2,
+						}
+					}).then(response=>{
+						if(response.data.result.errno !== 0){
+							api.alert({
+							    title: "错误提示",
+							    msg: response.data.result.errmsg,
+							});
+						}else{
+							// 注册成功!
+							api.confirm({
+							    title: '系统提示',
+							    msg: '注册成功',
+							    buttons: ['返回首页', '个人中心']
+							}, (ret, err)=>{
+							    if(ret.buttonIndex == 1){
+									// 跳转到首页
+									this.game.goWin("root","./index.html");
+								}else{
+									// 跳转到个人中心
+									this.game.goWin("user","./user.html");
+								}
+								// 2秒后关闭当前窗口
+								setTimeout(() => {
+									this.game.outWin();
+								}, 2000);
+							});
+						}
+
+					}).catch(error=>{
+						this.game.print(error.response.data.error);
+					});
+
+
+
+				},
+				send(){
+					// 发送短信
+					if (!/1[3-9]\d{9}/.test(this.mobile)){
+						this.game.tips("手机号格式不正确！");
+						return; // 阻止代码继续往下执行
+					}
+
+					if(this.is_send){
+						this.game.tips(`短信发送冷却中,请${this.send_interval}秒之后重新点击发送!`);
+						return; // 阻止代码继续往下执行
+					}
+
+					this.axios.post("",{
+						"jsonrpc": "2.0",
+						"id": this.game.uuid(),
+						"method": "Users.sms",
+						"params": {
+							"mobile": this.mobile,
+						}
+					}).then(response=>{
+						if(response.data.result.errno === 0){
+							// 短信已经发送....
+							this.game.tips("短信已经发送，请留意手机！");
+							this.is_send=true; // 进入冷却状态
+							this.send_interval = 60;
+							var timer = setInterval(()=>{
+								this.send_interval--;
+								if(this.send_interval<1){
+									clearInterval(timer);
+									this.is_send=false;  // 退出冷却状态
+								}
+							}, 1000);
+						}else{
+							// 发送短信失败！
+							api.alert({
+							    title: "系统警告",
+							    msg: response.data.result.errmsg,
+							});
+							if(response.data.result.errno === 1002){
+								this.send_interval = response.data.result.data.time; // 获取服务端返回的冷却时间
+								this.is_send=true;
+								var timer = setInterval(()=>{
+									this.send_interval--;
+									if(this.send_interval<1){
+										clearInterval(timer);
+										this.is_send=false;  // 退出冷却状态
+									}
+								}, 1000);
+							}
+
+						}
+
+					}).catch(error=>{
+						this.game.print(error.response.data.error);
+					});
+				}
             }
 		})
 	}

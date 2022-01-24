@@ -7,6 +7,7 @@
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <link rel="stylesheet" href="../css/main.css">
 	<script src="../script/vue.js"></script>
+	<script src="../script/axios.js"></script>
 	<script src="../script/main.js"></script>
 </head>
 <body>
@@ -17,7 +18,7 @@
     </div>
     <ul>
       <li><img class="module1" src="../image/image1.png"></li> <!-- 果园 -->
-      <li><img class="module2" src="../image/image2.png"></li> <!-- 会员 -->
+      <li><img class="module2" @click="open_user" src="../image/image2.png"></li> <!-- 会员 -->
       <li><img class="module3" src="../image/image3.png"></li> <!-- 娱乐 -->
       <li><img class="module4" @click="open_login" src="../image/image4.png"></li> <!-- 签到 -->
     </ul>
@@ -44,6 +45,9 @@
             methods:{
                 open_login(){
                     this.game.goWin("login","./login.html");
+                },
+                open_user(){
+                    this.game.goto(this, "user","./user.html");
                 }
             }
 		})

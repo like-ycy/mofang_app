@@ -206,3 +206,156 @@ html{
 	text-align: center;
 	user-select: none;
 }
+
+
+.user .header{
+	position: absolute;
+	top: 1.22rem;
+	left: 0;
+	right: 0;
+	margin: auto;
+	width: 32rem;
+	height: 19.28rem;
+	background: url("../image/ucenter.png") no-repeat 0 0;
+	background-size: 100%;
+  }
+  .user .back{
+	position: absolute;
+	width: 3.83rem;
+	height: 3.89rem;
+	z-index: 1;
+	top: 2.72rem;
+	left: 3rem;
+  }
+  .user .setting{
+	position: absolute;
+	z-index: 1;
+	top: 4.2rem;
+	right: 3.8rem;
+	width: 3.06rem;
+	height: 3.06rem;
+  }
+  .user .info{
+	position: absolute;
+	z-index: 1;
+	top: 6.94rem;
+	left: 3.89rem;
+	width: 6.39rem;
+	height: 9.17rem;
+  }
+  .user .info .avatar{
+	width: 6.39rem;
+	height: 6.39rem;
+	position: relative;
+  }
+  .user .info .avatar_bf{
+	position: absolute;
+	z-index: 1;
+	margin: auto;
+	width: 4.56rem;
+	height: 4.56rem;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+  }
+  .user .info .user_avatar{
+	position: absolute;
+	z-index: 1;
+	width: 4.56rem;
+	height: 4.56rem;
+	margin: auto;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+  }
+  .user .info .avatar_border{
+	position: absolute;
+	z-index: 1;
+	margin: auto;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 6.2rem;
+	height: 6.2rem;
+  }
+  .user .info .user_name{
+	text-align: center;
+  }
+  .user .wallet{
+	position: absolute;
+	top: 5.56rem;
+	right: 1.94rem;
+	width: 16rem;
+	height: 10rem;
+  }
+  .user .wallet .balance{
+	margin-top: 1.4rem;
+	float: left;
+	margin-right: 1rem;
+  }
+  .user .wallet .title{
+	color: #300;
+	font-size: 1.2rem;
+	width: 6.4rem;
+	text-align: center;
+  }
+  .user .wallet .title img{
+	width: 1.4rem;
+	margin-right: 0.2rem;
+	vertical-align: sub;
+	height: 1.4rem;
+  }
+  .user .wallet .num{
+	background: url("../image/btn3.png") no-repeat 0 0;
+	background-size: 100%;
+	width: 6.4rem;
+	font-size: 0.8rem;
+	color: #fff;
+	height: 2rem;
+	line-height: 1.8rem;
+	text-indent: 1rem;
+  }
+  .user .invite{
+	position: absolute;
+	top: 11.6rem;
+	right: 6.4rem;
+  }
+  .user .invite .invite_btn{
+	width: 9.39rem;
+	height: 3.67rem;
+  }
+  .user .menu{
+	position: absolute;
+	top: 22rem;
+	padding-top: 4.6rem;
+	right: 0;
+	left: 0;
+	margin: auto;
+	width: 28.44rem;
+	height: 33.89rem;
+	background: url("../image/bg10.png") no-repeat 0 0;
+	background-size: 100%;
+  }
+  .user .menu .item{
+	margin-left: 2.6rem;
+	margin-bottom: 0.5rem;
+	width: 23.06rem;
+	height: 4.22rem;
+	line-height: 4.22rem;
+	overflow: hidden;
+	background: url("../image/title.png") no-repeat 0 0;
+	background-size: 100%;
+	text-indent: 2rem;
+	color: #fff;
+	font-size: 1.33rem;
+  }
+  .user .menu .item .title{
+	float: left;
+  }
+  .user .menu .item .value{
+	float: right;
+	padding-right: 2rem;
+  }

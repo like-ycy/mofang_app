@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>用户中心</title>
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="../css/main.css">
+	<script src="../script/vue.js"></script>
+	<script src="../script/axios.js"></script>
+	<script src="../script/v-avatar-2.0.3.min.js"></script>
+  	<script src="../script/main.js"></script>
+</head>
+<body>
+	<div class="app user" id="app">
+		<div class="bg">
+      <img src="../image/bg0.jpg">
+    </div>
+		<img class="back" @click="back" src="../image/user_back.png" alt="">
+		<img class="setting" src="../image/setting.png" alt="">
+		<div class="header">
+			<div class="info">
+				<div class="avatar">
+					<img class="avatar_bf" src="../image/avatar_bf.png" alt="">
+					<div class="user_avatar">
+						<v-avatar v-if="user_info.avatar" :src="user_info.avatar" :size="55" :rounded="true"></v-avatar>
+						<v-avatar v-else-if="user_info.nickname" :username="user_info.nickname" :size="55" :rounded="true"></v-avatar>
+						<v-avatar v-else :username="user_info.id" :size="55" :rounded="true"></v-avatar>
+					</div>
+					<img class="avatar_border" src="../image/avatar_border.png" alt="">
+				</div>
+				<p class="user_name">{{user_info.nickname}}</p>
+			</div>
+			<div class="wallet">
+				<div class="balance">
+					<p class="title"><img src="../image/money.png" alt="">钱包</p>
+					<p class="num">{{game.money(user_info.money)}}</p>
+				</div>
+				<div class="balance">
+					<p class="title"><img src="../image/integral.png" alt="">果子</p>
+					<p class="num">{{game.money(user_info.credit)}}</p>
+				</div>
+			</div>
+			<div class="invite">
+				<img class="invite_btn" src="../image/invite.png" alt="">
+			</div>
+		</div>
+		<div class="menu">
+				<div class="item">
+					<span class="title">我的主页</span>
+					<span class="value">查看</span>
+				</div>
+				<div class="item">
+					<span class="title">任务列表</span>
+					<span class="value">75%</span>
+				</div>
+				<div class="item">
+					<span class="title">收益明细</span>
+					<span class="value">查看</span>
+				</div>
+				<div class="item">
+					<span class="title">实名认证</span>
+					<span class="value">未认证</span>
+				</div>
+				<div class="item">
+					<span class="title">问题反馈</span>
+					<span class="value">去反馈</span>
+				</div>
+			</ul>
+		</div>
+	</div>
+	<script>
+	apiready = function(){
+        Vue.prototype.game = new Game("../mp3/bg1.mp3");
+		new Vue({
+			el:"#app",
+			data(){
+				return {
+					user_info: {}, // 当前登陆用户信息
+				}
+			},
+			created(){
+				this.user_info = this.game.user_info();
+				this.game.print(this.user_info);
+			},
+			methods:{
+                back(){
+                    // 返回首页
+                    this.game.outWin();
+                },
+			}
+		});
+	}
+	</script>
+</body>
+</html>
